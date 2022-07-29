@@ -1,12 +1,16 @@
 from pathlib import Path
 import json
-from datetime import date
+from datetime import datetime, date
 import logging
 from functools import partial
 import facebook_scraper
 from backoff import on_exception, expo
 from ratelimit import limits, sleep_and_retry
-import click
+
+
+DATE_START = datetime.min
+DATE_END = datetime.max
+
 
 logging.basicConfig(
     format="%(asctime)s | %(levelname)s: %(message)s", level=logging.INFO
@@ -124,14 +128,7 @@ class Scraper:
         return next(post_iterator)
 
 
-@click.command()
-@click.option(
-    "--date-start", type=click.DateTime(formats=["%Y-%m-%d"]), default=str(date.min)
-)
-@click.option(
-    "--date-end", type=click.DateTime(formats=["%Y-%m-%d"]), default=str(date.max)
-)
-def main(date_start, date_end):
+def main(date_start=DATE_START, date_end=DATE_END):
 
     s = Scraper(date_start, date_end)
 
