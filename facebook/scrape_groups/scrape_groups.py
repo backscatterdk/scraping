@@ -71,6 +71,8 @@ class Scraper:
                     logging.error("Saved resume info")
                 raise e
 
+        self.end_group_scrape()
+
 
     def check_timeframe(self, post_time, allowed_before=10):
         """Checks whether post is within date range. It expects an almost chronological order,
@@ -115,13 +117,13 @@ class Scraper:
             )
         )
 
-    def end_group_scrape(self):
-        logging.info(f"Completed {self.group_id}")
+    def end_group_scrape(self, group_id):
+        logging.info(f"Completed {group_id}")
         self.resume_file.unlink(missing_ok=True)
         self.start_url = None
         self.k = 0
         with open("finished_groups.txt", "a") as f:
-            f.write(f"{self.group_id}\n")
+            f.write(f"{group_id}\n")
 
 
     def try_to_resume(self):
