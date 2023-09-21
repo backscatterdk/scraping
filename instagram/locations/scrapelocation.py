@@ -1,3 +1,6 @@
+"""
+Download posts from list of location ID's (locationIDs.txt)
+"""
 import os
 import instaloader
 
@@ -6,7 +9,7 @@ def main():
     USER = ""
     
     # Read the location IDs from a file
-    with open('path+location.txt', 'r') as file:
+    with open(os.getcwd()+'/locationIDs.txt', 'r') as file:
         location_ids = [line.strip() for line in file if line.strip()]
 
     # Load session previously saved with this username 
@@ -20,7 +23,7 @@ def main():
     L.load_session_from_file(USER)
 
     # Set the current working directory to your desired path
-    download_directory = 'path'
+    download_directory = os.getcwd()
     
     # Create a separate folder for each location ID
     for location_id in location_ids:
@@ -48,5 +51,5 @@ def main():
         # After processing all posts for this location, continue to the next location ID
         print(f"Finished downloading for location ID: {location_id}")
 
-if __name__ == "__main__":
+if __name__:
     main()
