@@ -3,6 +3,7 @@ Download posts from list of location ID's (locationIDs.txt)
 """
 import os
 import instaloader
+from pathlib import Path
 
 def main():
     # Define the user
@@ -22,12 +23,13 @@ def main():
     
     L.load_session_from_file(USER)
 
-    # Set the current working directory to your desired path
-    download_directory = os.getcwd()
+    # create downloads folder
+    Path("downloads").mkdir(exist_ok=True)
+
     
     # Create a separate folder for each location ID
     for location_id in location_ids:
-        location_folder = os.path.join(download_directory, location_id)
+        location_folder = os.path.join(os.getcwd(), "downloads", location_id)
         os.makedirs(location_folder, exist_ok=True)  # Create the folder for the location ID
         
         # Set the download target to the location-specific folder
